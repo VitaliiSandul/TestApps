@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SimpleFragment">
+
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/btn_notification"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintVertical_bias="0.35"
+    android:backgroundTint="@color/color2"
+    android:background="@drawable/btn_minus_plus"
+    android:text="Create new notification"
+    android:textColor="@android:color/white"
+    android:textSize="28dp"
+    android:textAllCaps="false"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"
+        />
+
+    <ImageView
+        android:id="@+id/img_txt"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glv_1"
+        app:layout_constraintEnd_toEndOf="@+id/glv_2"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/rectangle_frag_number"
+        />
+
+    <TextView
+        android:id="@+id/page_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/img_txt"
+        app:layout_constraintBottom_toBottomOf="@+id/img_txt"
+        app:layout_constraintStart_toStartOf="@+id/img_txt"
+        app:layout_constraintEnd_toEndOf="@+id/img_txt"
+        android:text="1"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@android:color/transparent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_remove"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="-"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/color3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glv_1"
+        android:background="@drawable/btn_minus_plus"
+        android:layout_marginBottom="35dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="+"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/color3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/glv_2"
+        android:background="@drawable/btn_minus_plus"
+        android:layout_marginBottom="35dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
