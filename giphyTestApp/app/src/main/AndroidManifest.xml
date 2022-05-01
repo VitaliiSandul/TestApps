@@ -13,9 +13,11 @@
         android:theme="@style/Theme.GiphyTestApp">
         <activity
             android:name=".view.FullgiphyActivity"
+            android:label="@string/label2"
             android:exported="false" />
         <activity
             android:name=".view.MainActivity"
+            android:label="@string/label1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">giphyTestApp</string>
+    <string name="label1">First screen</string>
+    <string name="label2">Second screen</string>
 </resources>
