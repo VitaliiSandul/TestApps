@@ -3,9 +3,9 @@ package com.sandul.giphytestapp.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.sandul.giphytestapp.GiphyList
 import com.sandul.giphytestapp.adapter.GiphyAdapter
 import com.sandul.giphytestapp.databinding.ActivityMainBinding
 import com.sandul.giphytestapp.repository.GiphyRepository
@@ -36,15 +36,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerViewGiphy.adapter = adapter
 
-        viewModel.giphiesList.observe(this, Observer {
-            Log.d(TAG, "movieList: $it")
-            adapter.setGiphiesList(it)
-        })
+        viewModel.getGiphyListObserver().observe(this, Observer<GiphyList>{
+            if(it != null){
+                adapter.setGiphiesList(it.list)
+            }
+        });
 
-        viewModel.errorMessage.observe(this, Observer {
-            Log.d(TAG, "errorMessage: $it")
-        })
-
-        viewModel.getAllGiphies()
+        viewModel.makeApiCall()
     }
 }

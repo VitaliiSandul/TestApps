@@ -2,38 +2,41 @@ package com.sandul.giphytestapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sandul.giphytestapp.GiphyObject
+import com.sandul.giphytestapp.GiphyList
 import com.sandul.giphytestapp.repository.GiphyRepository
-import kotlinx.coroutines.*
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class  GiphyViewModel(private val repository: GiphyRepository): ViewModel(){
 
-    val errorMessage = MutableLiveData<String>()
-    val giphiesList = MutableLiveData<List<GiphyObject>>()
-    var job: Job? = null
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onError("Exception handled: ${throwable.localizedMessage}")
+    val giphiesList = MutableLiveData<GiphyList>()
+
+    fun getGiphyListObserver(): MutableLiveData<GiphyList>{
+        return giphiesList
     }
 
-    fun getAllGiphies() {
-        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = repository.getAllGiphies()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    giphiesList.postValue(response.body()?.list)
-                } else {
-                    onError("Error : ${response.message()} ")
-                }
+    fun makeApiCall(){
+        val retroInstance = repository.getAllGiphies()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(getGiphyListObserverRx())
+    }
+
+    private fun getGiphyListObserverRx(): Observer<GiphyList>{
+        return object : Observer<GiphyList>{
+            override fun onSubscribe(d: Disposable) { }
+
+            override fun onNext(t: GiphyList) {
+                giphiesList.postValue(t)
             }
+
+            override fun onError(e: Throwable) {
+                giphiesList.postValue(null)
+            }
+
+            override fun onComplete() { }
         }
-    }
-
-    private fun onError(message: String) {
-        errorMessage.value = message
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
     }
 }

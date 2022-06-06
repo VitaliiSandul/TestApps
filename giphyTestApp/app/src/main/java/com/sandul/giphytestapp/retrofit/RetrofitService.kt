@@ -1,8 +1,11 @@
 package com.sandul.giphytestapp.retrofit
 
 import com.sandul.giphytestapp.GiphyList
-import retrofit2.Response
+import com.sandul.giphytestapp.GiphyObject
+import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
@@ -11,7 +14,7 @@ const val BASE_URL = "https://api.giphy.com/v1/"
 
 interface RetrofitService {
     @GET("gifs/trending?api_key=$apiKey")
-    suspend fun getGiphyList() : Response<GiphyList>
+    fun getGiphyList() : Observable<GiphyList>
 
     companion object {
         var retrofitService: RetrofitService? = null
@@ -22,6 +25,7 @@ interface RetrofitService {
                 val retrofit = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
                 retrofitService = retrofit.create(RetrofitService::class.java)
             }
